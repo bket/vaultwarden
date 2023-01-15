@@ -98,6 +98,21 @@ async fn main() -> Result<(), Error> {
 
     let extra_debug = matches!(level, LF::Trace | LF::Debug);
 
+    #[cfg(not(windows))]
+    {
+        if CONFIG.drop_privileges() {
+            privdrop::PrivDrop::default()
+                .chroot(&CONFIG.chroot_directory())
+                .user(&CONFIG.privileged_user())
+                .apply()
+                .unwrap_or_else(|e| {
+                    error!("Failed to drop privileges: {}", e);
+                    exit(1);
+                });
+            info!("Successfully dropped privileges");
+        }
+    }
+
     check_data_folder().await;
     check_rsa_keys().unwrap_or_else(|_| {
         error!("Error creating keys, exiting...");

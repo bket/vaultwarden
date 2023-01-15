@@ -580,6 +580,13 @@ make_config! {
 
         /// Enable groups (BETA!) (Know the risks!) |> Enables groups support for organizations (Currently contains known issues!).
         org_groups_enabled:     bool,   false,  def,    false;
+
+        /// Drop privileges |> When enabled, vaultwarden will chroot to chroot_directory and drop privileges to privileged_user.
+        drop_privileges:    bool,   true,   def,    false;
+        /// Chroot directory |> Changes the apparent root directory to the one specified.
+        chroot_directory:   String, true,   def,    "/var/vaultwarden".to_string();
+        /// Run as privileged_user
+        privileged_user:    String, true,   def,    "_vaultwarden".to_string();
     },
 
     /// Yubikey settings

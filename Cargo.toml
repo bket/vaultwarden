@@ -37,6 +37,8 @@ unstable = []
 [target."cfg(not(windows))".dependencies]
 # Logging
 syslog = "6.0.1" # Needs to be v4 until fern is updated
+# privdrop
+privdrop = "0.5.3"
 
 [dependencies]
 # Logging
